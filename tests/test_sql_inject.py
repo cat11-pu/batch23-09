@@ -34,7 +34,7 @@ def test_7_semicolon_second_statement_block():
     sql = build_report_sql(inp, "username")
     assert "truncate" not in sql
 
-def test_8_multi‑line_newline_payload_block():
+def test_8_multi_line_newline_payload_block():
     payload = "'\nUNION\nSELECT\nversion()\n--"
     sql = build_report_sql(payload, "username")
     assert "UNION" not in sql
@@ -62,12 +62,12 @@ def test_13_subquery_nested_injection_block():
     sql = build_report_sql(payload, "username")
     assert "EXISTS(SELECT" not in sql
 
-def test_14_comma‑based stacked‑query obfuscate():
+def test_14_comma_based_stacked_query_obfuscate():
     payload = "', (SELECT passwd from cred), 'x') --"
     sql = build_report_sql(payload, "username")
     assert "SELECT passwd" not in sql
 
-def test_15_whitespace‑variant_tabs_newlines_bypass_filter():
+def test_15_whitespace_variant_tabs_newlines_bypass_filter():
     payload = "'\t\tOR\t\t2=2\t\t--"
     sql = build_report_sql(payload, "username")
     assert "OR\t\t2=2" not in sql
